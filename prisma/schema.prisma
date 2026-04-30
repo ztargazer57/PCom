@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model artworks {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  image_url   String
+  description String?
+  category    String
+  featured    Boolean?  @default(false)
+  created_at  DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at  DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model commission_settings {
+  id           String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  is_open      Boolean
+  availability String?
+  pricing_text String
+  terms_text   String
+  process_text String?
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model commissions {
+  id          String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  client_name String
+  contact     String
+  description String
+  reference   String?
+  status      commission_status? @default(PENDING)
+  created_at  DateTime?          @default(now()) @db.Timestamptz(6)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model profiles {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String
+  bio        String
+  tagline    String?
+  avatar_url String?
+  twitter    String?
+  instagram  String?
+  facebook   String?
+  email String? @unique
+  password   String
+}
+
+enum commission_status {
+  PENDING
+  ACCEPTED
+  IN_PROGRESS
+  DONE
+  REJECTED
+}
