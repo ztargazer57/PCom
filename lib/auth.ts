@@ -13,7 +13,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       async authorize(credentials) {
         const email = credentials?.email as string
         const password = credentials?.password as string
-
         const user = await prisma.profiles.findUnique({
           where: { email },
         })
@@ -27,5 +26,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    authorized({ request ,auth }) {
+        const { nextUrl } = request;
+
+        if(nextUrl.pathname.startsWith("/dashboard")) { return !!auth; }
+        if(nextUrl.pathname.startsWith("/auth")) { return true; }
+        return true;
+    }
+  },
+  pages: {
+        signIn: "/auth",
+      },
   secret: process.env.NEXT_AUTH_SECRET,
 })
