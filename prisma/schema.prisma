@@ -50,8 +50,22 @@ model profiles {
   twitter    String?
   instagram  String?
   facebook   String?
-  email String? @unique
+  email      String  @unique
   password   String
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model site_content {
+  id              String    @id @default("main")
+  hero_title      String
+  hero_subtitle   String
+  featured_title  String
+  about_title     String
+  about_text      String
+  cta_title       String
+  cta_text        String
+  cta_button_text String
+  updated_at      DateTime? @default(now()) @db.Timestamptz(6)
 }
 
 enum commission_status {

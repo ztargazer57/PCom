@@ -1,5 +1,6 @@
 "use client";
-
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -51,6 +52,21 @@ const fadeUp = {
 };
 
 export default function ArtPortfolioLandingPage() {
+    const [bio, setBio] = useState("");
+    useEffect(() => {
+        const loadHeroSectionText = async () => {
+            try {
+                const {data, error} = await supabase.from("profiles").select("*").single();
+                setBio(data?.bio);
+            } catch (error) {
+                alert(error);
+                return;
+            }
+
+        }
+        loadHeroSectionText();
+        }
+    ,[])
   return (
     <main className="min-h-screen bg-[#F7FBFF] text-slate-700">
       <nav className="sticky top-0 z-50 border-b border-sky-100/80 bg-[#F7FBFF]/80 backdrop-blur-xl">
@@ -90,7 +106,7 @@ export default function ArtPortfolioLandingPage() {
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-8 text-slate-600 md:text-lg">
-              Hi, I’m Lumi — a character illustrator creating calm, expressive artwork for personal portraits, original characters, gifts, and story-driven commissions.
+              {bio}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

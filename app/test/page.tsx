@@ -28,5 +28,5 @@ export default function Upload() {
       <button onClick={handleUpload}>Upload</button>
       {imageId? <img src={`https://res.cloudinary.com/dk6xuayqj/image/upload/${imageId}`} alt="Uploaded Image" /> : <div>No image uploaded yet.</div>}
     </div>
-  )
+    )
 }
