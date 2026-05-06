@@ -9,6 +9,7 @@ export async function proxy(request: NextRequest) {
   const { nextUrl } = request
   const session = request.cookies.get("authjs.session-token")?.value || null
   const isDashboard = nextUrl.pathname.startsWith("/dashboard")
+  const isProfile = nextUrl.pathname.startsWith("/profile")
   const isAuthPage = nextUrl.pathname.startsWith("/auth")
 
   // 3. Redirect logic
@@ -16,6 +17,11 @@ export async function proxy(request: NextRequest) {
     // Not logged in -> Redirect to login
     return NextResponse.redirect(new URL("/auth", request.url))
   }
+    if (isProfile && !session) {
+    // Not logged in -> Redirect to login
+    return NextResponse.redirect(new URL("/auth", request.url))
+  }
+
 
   if (isAuthPage && session) {
     // Logged in -> Redirect to dashboard
