@@ -52,26 +52,27 @@ const fadeUp = {
 };
 
 export default function ArtPortfolioLandingPage() {
-    const [heroTitle, setHeroTitle] = useState("");
-    const [heroSubtitle, setHeroSubtitle] = useState("");
+    const [pageContent, setPageContent] = useState({
+        heroTitle: "",
+        heroSubtitle: "",
+        featuredTitle: "",
+        ctaTitle: "",
+        ctaText: "",
+        ctaBText: "",
 
-    const [featuredTitle, setFeaturedTitle] = useState("");
-
-    const [ctaTitle, setCTATitle] = useState("");
-    const [ctaText, setCTAText] = useState("");
-    const [ctaBText, setCTABText] = useState("");
+    });
     useEffect(() => {
         const loadSiteContent = async () => {
             try {
                 const {data, error} = await supabase.from("site_content").select("*").single();
-                setHeroTitle(data?.hero_title);
-                setHeroSubtitle(data?.hero_subtitle);
-
-                setFeaturedTitle(data?.featured_title);
-
-                setCTATitle(data?.cta_title);
-                setCTAText(data?.cta_text);
-                setCTABText(data?.cta_button_text);
+                setPageContent({
+                    heroTitle: data?.hero_title,
+                    heroSubtitle: data?.hero_subtitle,
+                    featuredTitle: data?.featured_title,
+                    ctaTitle: data?.cta_title,
+                    ctaText: data?.cta_text,
+                    ctaBText: data?.cta_button_text,
+                })
             } catch (error) {
                 alert(error);
                 return;
@@ -84,7 +85,7 @@ export default function ArtPortfolioLandingPage() {
   return (
     <main className="min-h-screen bg-[#F7FBFF] text-slate-700">
       <nav className="sticky top-0 z-50 border-b border-sky-100/80 bg-[#F7FBFF]/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
+        <div className="mx-auto flex items-center justify-between px-5 py-4 md:px-8">
           <a href="#" className="flex items-center gap-2 text-lg font-semibold tracking-tight text-slate-800">
             <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-200/80 shadow-sm">
               <Sparkles className="h-5 w-5 text-sky-600" />
@@ -116,11 +117,11 @@ export default function ArtPortfolioLandingPage() {
             </div>
 
             <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-slate-800 sm:text-5xl md:text-6xl">
-              {heroTitle}
+              {pageContent.heroTitle}
             </h1>
 
             <p className="mt-6 max-w-xl text-base leading-8 text-slate-600 md:text-lg">
-              {heroSubtitle}
+              {pageContent.heroSubtitle}
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -160,7 +161,7 @@ export default function ArtPortfolioLandingPage() {
       <section id="works" className="mx-auto max-w-7xl px-5 py-20 md:px-8">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} transition={{ duration: 0.5 }} className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">Featured Works</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800 md:text-4xl">{featuredTitle}</h2>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800 md:text-4xl">{pageContent.featuredTitle}</h2>
           <p className="mt-4 text-slate-600">Browse selected personal pieces, commissions, and gentle character studies.</p>
         </motion.div>
 
@@ -208,14 +209,14 @@ export default function ArtPortfolioLandingPage() {
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">Commissions</p>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800 md:text-4xl">
-                {ctaTitle}
+                {pageContent.ctaTitle}
               </h2>
               <p className="mt-4 max-w-2xl leading-7 text-slate-600">
-                {ctaText}
+                {pageContent.ctaText}
               </p>
             </div>
             <Button className="rounded-2xl bg-sky-400 px-7 py-6 text-base text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300">
-              {ctaBText}
+              {pageContent.ctaBText}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
