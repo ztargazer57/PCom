@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Bell, Star, Inbox, Settings, User, Image, BoxIcon } from "lucide-react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const menuItems = [
   { label: "Artworks", icon: Image,active: true, url:"/artworks"},
@@ -35,7 +36,7 @@ export default function DasboardLayout({children}:{children: React.ReactNode}) {
                     {menuItems.map((item) => {
                       const Icon = item.icon;
                       return (
-                        <a
+                        <Link
                           key={item.label}
                           href={item.url}
                           className={`flex min-w-max items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
@@ -46,7 +47,7 @@ export default function DasboardLayout({children}:{children: React.ReactNode}) {
                         >
                           <Icon className="h-5 w-5" />
                           {item.label}
-                        </a>
+                        </Link>
                       );
                     })}
                   </nav>
@@ -64,7 +65,7 @@ export default function DasboardLayout({children}:{children: React.ReactNode}) {
                     </p>
                   </div>
                   </aside>
-                  <main className="min-h-screen text-slate-700 min-w-screen px-0 mx-auto lg:mt-8 lg:min-w-7xl md:w-5xl sm:min-w-screen lg:px-5 md:px-4 sm:px-0">
+                  <main className="min-h-screen flex-1 text-slate-700 px-0 lg:mt-8 lg:px-5 md:px-4">
                     {children}
                   </main>
                   </div>
