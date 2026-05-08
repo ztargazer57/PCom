@@ -1,4 +1,6 @@
 "use client";
+
+import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import React from "react";
@@ -58,6 +60,7 @@ const fadeUp = {
 };
 
 export default function SiteContent() {
+    const [isSaving, setIsSaving] = useState(false);
   const [pageContent, setPageContent] = useState({
     heroTitle: "",
     heroSubtitle: "",
@@ -105,6 +108,7 @@ export default function SiteContent() {
   };
 
   const handleSave = async () => {
+    setIsSaving(true);
     const { data: siteContent, error } = await supabase
       .from("site_content")
       .select("*")
@@ -143,10 +147,20 @@ export default function SiteContent() {
 
     console.log("Saved Successfully", data);
     alert("Saved Successfully");
+    setIsSaving(false);
   };
 
+  const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
+
   return (
-    <div className="w-full h-full">
+  <div className="flex h-screen flex-col bg-[#F7FBFF]">
+
+    {/* Scrollable content */}
+    <div className="flex-1 overflow-y-auto">
       <main className="min-h-screen bg-[#F7FBFF] text-slate-700">
         <nav className="sticky top-0 z-50 border-b border-sky-100/80 bg-[#F7FBFF]/80 backdrop-blur-xl">
           <div className="mx-auto flex items-center justify-between px-5 py-4 md:px-8">
@@ -337,7 +351,7 @@ export default function SiteContent() {
               </div>
               <input
                 type="text"
-                className="button max-h-10! rounded-2xl bg-sky-400 px-7 py-6 text-base text-xl text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300"
+                className="button max-h-10! rounded-2xl bg-sky-400 px-7 py-3 text-base text-xl text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300"
                 name="ctaBText"
                 value={pageContent.ctaBText}
                 onChange={handleInput}
@@ -409,19 +423,32 @@ export default function SiteContent() {
           © 2026 Lumi Art Studio. Soft character art and commissions.
         </footer>
       </main>
-      <Button type="button"
-        onClick={handleSave}
-        className="
-    rounded-2xl
-    bg-sky-400
-    px-6
-    py-6
-    text-white
-    shadow-lg
-  "
-      >
-        Save Changes
-      </Button>
     </div>
-  );
+
+    {mounted &&
+  createPortal(
+    <Button
+      type="button"
+      onClick={handleSave}
+      className="
+        fixed
+        bottom-6
+        right-6
+        z-[9999]
+        rounded-2xl
+        bg-sky-400
+        px-6
+        py-5
+        text-white
+        shadow-xl
+        hover:bg-sky-500
+      "
+    >
+      {(isSaving)?  "Saving..." : "Save Changes"}
+    </Button>,
+    document.body
+  )}
+
+  </div>
+);
 }
