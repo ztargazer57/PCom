@@ -1,4 +1,6 @@
 "use client";
+
+import { createPortal } from "react-dom";
 import { useEffect, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import React from "react";
@@ -58,6 +60,7 @@ const fadeUp = {
 };
 
 export default function SiteContent() {
+    const [isSaving, setIsSaving] = useState(false);
   const [pageContent, setPageContent] = useState({
     heroTitle: "",
     heroSubtitle: "",
@@ -65,6 +68,8 @@ export default function SiteContent() {
     ctaTitle: "",
     ctaText: "",
     ctaBText: "",
+    aboutTitle: "",
+    aboutText: "",
   });
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -82,6 +87,8 @@ export default function SiteContent() {
           ctaTitle: data?.cta_title,
           ctaText: data?.cta_text,
           ctaBText: data?.cta_button_text,
+          aboutTitle: data?.about_title,
+          aboutText: data?.about_text,
         });
       } catch (error) {
         alert(error);
@@ -105,6 +112,7 @@ export default function SiteContent() {
   };
 
   const handleSave = async () => {
+    setIsSaving(true);
     const { data: siteContent, error } = await supabase
       .from("site_content")
       .select("*")
@@ -131,6 +139,8 @@ export default function SiteContent() {
         cta_title: pageContent.ctaTitle,
         cta_text: pageContent.ctaText,
         cta_button_text: pageContent.ctaBText,
+        about_title: pageContent.aboutTitle,
+        about_text: pageContent.aboutText,
       })
       .eq("id", siteContentId)
       .select();
@@ -143,10 +153,20 @@ export default function SiteContent() {
 
     console.log("Saved Successfully", data);
     alert("Saved Successfully");
+    setIsSaving(false);
   };
 
+  const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
+
   return (
-    <div className="w-full h-full">
+  <div className="flex h-screen flex-col bg-[#F7FBFF]">
+
+    {/* Scrollable content */}
+    <div className="flex-1 overflow-y-auto">
       <main className="min-h-screen bg-[#F7FBFF] text-slate-700">
         <nav className="sticky top-0 z-50 border-b border-sky-100/80 bg-[#F7FBFF]/80 backdrop-blur-xl">
           <div className="mx-auto flex items-center justify-between px-5 py-4 md:px-8">
@@ -337,7 +357,7 @@ export default function SiteContent() {
               </div>
               <input
                 type="text"
-                className="button max-h-10! rounded-2xl bg-sky-400 px-7 py-6 text-base text-xl text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300"
+                className="button max-h-10! rounded-2xl bg-sky-400 px-7 py-3 text-base text-xl text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300"
                 name="ctaBText"
                 value={pageContent.ctaBText}
                 onChange={handleInput}
@@ -372,23 +392,21 @@ export default function SiteContent() {
               variants={fadeUp}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">
-                About the Artist
-              </p>
+              <textarea className="w-full text-sm font-semibold uppercase tracking-[0.2em] text-sky-500"
+                name="aboutTitle"
+                value={pageContent.aboutTitle}
+                onChange={handleInput}
+              >
+              </textarea>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800">
                 Hi, I’m Lumi.
               </h2>
-              <p className="mt-4 max-w-3xl leading-8 text-slate-600">
-                I create character illustrations with soft colors, gentle
-                expressions, and cozy details. My work is inspired by dreamy
-                skies, quiet stories, and the little emotions that make a
-                character feel alive.
-              </p>
-              <p className="mt-3 max-w-3xl leading-8 text-slate-600">
-                Whether you want art of your original character, a cute
-                portrait, or a special gift, I’ll help shape your idea into a
-                warm and personal piece.
-              </p>
+              <textarea className="w-full"
+                name="aboutText"
+                value={pageContent.aboutText}
+                onChange={handleInput}
+              >
+              </textarea>
 
               <div className="mt-7 flex gap-3">
                 {[Send, MessageCircle, Mail].map((Icon, index) => (
@@ -409,19 +427,32 @@ export default function SiteContent() {
           © 2026 Lumi Art Studio. Soft character art and commissions.
         </footer>
       </main>
-      <Button type="button"
-        onClick={handleSave}
-        className="
-    rounded-2xl
-    bg-sky-400
-    px-6
-    py-6
-    text-white
-    shadow-lg
-  "
-      >
-        Save Changes
-      </Button>
     </div>
-  );
+
+    {mounted &&
+  createPortal(
+    <Button
+      type="button"
+      onClick={handleSave}
+      className="
+        fixed
+        bottom-6
+        right-6
+        z-[9999]
+        rounded-2xl
+        bg-sky-400
+        px-6
+        py-5
+        text-white
+        shadow-xl
+        hover:bg-sky-500
+      "
+    >
+      {(isSaving)?  "Saving..." : "Save Changes"}
+    </Button>,
+    document.body
+  )}
+
+  </div>
+);
 }
