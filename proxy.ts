@@ -9,20 +9,16 @@ export async function proxy(request: NextRequest) {
   const { nextUrl } = request
   const session = request.cookies.get("authjs.session-token")?.value || null
   const isDashboard = nextUrl.pathname.startsWith("/dashboard")
+  const isDBCommission = nextUrl.pathname.startsWith("/commission")
+  const isDBSiteContent = nextUrl.pathname.startsWith("/site-content")
   const isProfile = nextUrl.pathname.startsWith("/profile")
   const isAuthPage = nextUrl.pathname.startsWith("/auth")
 
   // 3. Redirect logic
-  if (isDashboard && !session) {
+  if ((isDashboard || isProfile || isDBCommission || isDBSiteContent) && !session) {
     // Not logged in -> Redirect to login
     return NextResponse.redirect(new URL("/auth", request.url))
   }
-    if (isProfile && !session) {
-    // Not logged in -> Redirect to login
-    return NextResponse.redirect(new URL("/auth", request.url))
-  }
-
-
   if (isAuthPage && session) {
     // Logged in -> Redirect to dashboard
     return NextResponse.redirect(new URL("/dashboard", request.url))

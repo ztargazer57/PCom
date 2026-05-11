@@ -7,12 +7,13 @@ import {
   User,
   Image,
   BoxIcon,
+  LayoutGridIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
 const menuItems = [
-  { label: "Artworks", icon: Image, active: true, url: "/artworks" },
+  { label: "Dashboard", icon: LayoutGridIcon, url: "/dashboard" },
   { label: "Profile", icon: User, url: "/profile" },
   { label: "Site Content", icon: BoxIcon, url: "/site-content" },
   { label: "Commission", icon: Inbox, url: "/commission" },

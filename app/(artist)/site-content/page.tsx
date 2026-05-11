@@ -68,6 +68,8 @@ export default function SiteContent() {
     ctaTitle: "",
     ctaText: "",
     ctaBText: "",
+    aboutTitle: "",
+    aboutText: "",
   });
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
@@ -85,6 +87,8 @@ export default function SiteContent() {
           ctaTitle: data?.cta_title,
           ctaText: data?.cta_text,
           ctaBText: data?.cta_button_text,
+          aboutTitle: data?.about_title,
+          aboutText: data?.about_text,
         });
       } catch (error) {
         alert(error);
@@ -135,6 +139,8 @@ export default function SiteContent() {
         cta_title: pageContent.ctaTitle,
         cta_text: pageContent.ctaText,
         cta_button_text: pageContent.ctaBText,
+        about_title: pageContent.aboutTitle,
+        about_text: pageContent.aboutText,
       })
       .eq("id", siteContentId)
       .select();
@@ -386,23 +392,21 @@ useEffect(() => {
               variants={fadeUp}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">
-                About the Artist
-              </p>
+              <textarea className="w-full text-sm font-semibold uppercase tracking-[0.2em] text-sky-500"
+                name="aboutTitle"
+                value={pageContent.aboutTitle}
+                onChange={handleInput}
+              >
+              </textarea>
               <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800">
                 Hi, I’m Lumi.
               </h2>
-              <p className="mt-4 max-w-3xl leading-8 text-slate-600">
-                I create character illustrations with soft colors, gentle
-                expressions, and cozy details. My work is inspired by dreamy
-                skies, quiet stories, and the little emotions that make a
-                character feel alive.
-              </p>
-              <p className="mt-3 max-w-3xl leading-8 text-slate-600">
-                Whether you want art of your original character, a cute
-                portrait, or a special gift, I’ll help shape your idea into a
-                warm and personal piece.
-              </p>
+              <textarea className="w-full"
+                name="aboutText"
+                value={pageContent.aboutText}
+                onChange={handleInput}
+              >
+              </textarea>
 
               <div className="mt-7 flex gap-3">
                 {[Send, MessageCircle, Mail].map((Icon, index) => (
