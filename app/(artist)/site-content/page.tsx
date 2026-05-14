@@ -198,6 +198,7 @@ useEffect(() => {
         <section className="relative overflow-hidden bg-gradient-to-br from-[#DDF1FF] via-[#F7FBFF] to-white">
           <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-sky-200/50 blur-3xl" />
           <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-blue-100/70 blur-3xl" />
+          <hr></hr>
 
           <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
             <motion.div
