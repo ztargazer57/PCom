@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-accent="blueSky"
+      data-accent="emerald"
       className={cn("h-full", "antialiased", wixMadeforDisplay.variable, ysabeau.variable, dongle.variable)}
     >
       <body className="min-h-full flex flex-col">{children}</body>

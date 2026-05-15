@@ -34,7 +34,7 @@ const statusClass: Record<string, string> = {
 
 export default function CommissionSection() {
     return(
-        <div className=" grid gap-8 xl:grid-cols-[0.9fr_1.4fr]">
+        <div className="grid gap-8 xl:grid-cols-[0.9fr_1.4fr]">
             <Card className="rounded-[2rem] border-sky-100 bg-white shadow-lg shadow-sky-100/60">
               <CardHeader>
                 <CardTitle className="text-xl text-slate-800">

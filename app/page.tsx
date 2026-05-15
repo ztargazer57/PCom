@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, scale } from "framer-motion";
 import {
   Mail,
   Sparkles,
@@ -12,45 +12,17 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-const artworks = [
-  {
-    title: "Moonlit Guardian",
-    category: "Character Illustration",
-    image:
-      "https://images.unsplash.com/photo-1547891654-e66ed7ebb968?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Soft Morning Mage",
-    category: "Personal Work",
-    image:
-      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Pastel Daydream",
-    category: "Commissioned Work",
-    image:
-      "https://images.unsplash.com/photo-1515405295579-ba7b45403062?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Quiet Forest Spirit",
-    category: "Illustration Study",
-    image:
-      "https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Blue Hour Portrait",
-    category: "Portrait Commission",
-    image:
-      "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?q=80&w=1200&auto=format&fit=crop",
-  },
-  {
-    title: "Little Star Witch",
-    category: "Sketch / Study",
-    image:
-      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1200&auto=format&fit=crop",
-  },
-];
+import { ArtCarousel } from "@/components/Carousel";
+
+const fade = {
+    hidden: { opacity: 0, scale: .95 },
+    visible: { opacity: 1, scale: 1},
+}
+
+const fadeDown = {
+  hidden: { opacity: 0, y: -40 },
+  visible: { opacity: 1, y: 0 },
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -149,19 +121,20 @@ export default function ArtPortfolioLandingPage() {
         <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-primary-200/50 blur-3xl" />
         <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-primary-100/70 blur-3xl" />
 
-        <hr className="mt-24 mb-8 max-w-[90%] mx-auto border-primary-700/20 hidden md:block lg:block"></hr>
+        <hr className="mt-20 mb-8 max-w-[90%] mx-auto border-primary-700/20 hidden md:block lg:block"/>
 
         <div className="relative mx-auto grid max-w-7xl items-center px-5 py-8 md:grid-cols-2 md:px-8 md:py-12">
           <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: false }}
             variants={fadeRight}
             transition={{ duration: 1 }}
           >
             <div className="relative w-fit h-fit mx-auto">
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white/70 px-4 py-2 text-sm text-primary-700 shadow-sm backdrop-blur">
                 <Heart className="h-4 w-4 fill-primary-200 text-primary-500" />
-                <p className="font-styled text-xl mt-1">Custom character art with a soft magical touch</p>
+                <p className="font-styled text-lg mt-1 sm:text-xl lg:text-2xl">Character art with a soft magical touch</p>
               </div>
 
               <h1 className=" max-w-[15ch] text-4xl mx-auto font-heading font-bold tracking-wide leading-[0.95] text-slate-800 sm:text-5xl md:text-5xl lg:text-6xl [text-shadow:4px_4px_4px_rgba(1,1,1,0.25)]">
@@ -189,8 +162,9 @@ export default function ArtPortfolioLandingPage() {
 
           <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
             variants={fadeLeft}
+            viewport={{ once: false }}
             transition={{ duration: 1 }}
             className="relative mx-auto w-full max-w-lg"
           >
@@ -211,66 +185,45 @@ export default function ArtPortfolioLandingPage() {
         <hr className="mt-8 mb-24 max-w-[50%] mx-auto border-primary-700/20 hidden md:block lg:block"></hr>
       </section>
 
-      <section id="works" className="mx-auto max-w-7xl px-5 py-20 md:px-8">
+      <section id="works" className="mt-12 mx-auto max-w-7xl px-5 py-20 md:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUp}
-          transition={{ duration: 0.5 }}
+          viewport={{ once: false }}
+          variants={fadeDown}
+          transition={{ duration: 1 }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+          <p className="text-sm font-bold font-heading uppercase tracking-[0.1em] text-primary-400 [text-shadow:0_0_4px_rgba(3,169,244,.3)]">
             Featured Works
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800  md:text-4xl">
+          <h2 className="text-2xl mt-1 font-bold font-heading tracking-tight text-primary-900  md:text-4xl">
             {pageContent.featuredTitle}
           </h2>
-          <p className="mt-4 text-slate-600">
+          <p className="font-body text-primary-900/60">
             Browse selected personal pieces, commissions, and gentle character
             studies.
           </p>
         </motion.div>
-
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {artworks.map((art, index) => (
-            <motion.div
-              key={art.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.45, delay: index * 0.05 }}
-            >
-              <Card className="group overflow-hidden rounded-[1.75rem] border-primary-100 bg-white shadow-lg shadow-primary-100/70 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-100">
-                <CardContent className="p-3">
-                  <div className="overflow-hidden rounded-[1.35rem]">
-                    <img
-                      src={art.image}
-                      alt={art.title}
-                      loading="lazy"
-                      className="h-72 w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-105"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-slate-800">
-                      {art.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-slate-500">
-                      {art.category}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+        <motion.div
+            initial="hidden"
+            whileInView="visible"
+            variants={fade}
+            viewport={{ once: false }}
+            transition={{duration: 1}}
+        >
+            <div className="w-full min-h-120">
+            <hr className="mt-8 max-w-[80%] mx-auto border-primary-700/20 "/>
+           <ArtCarousel></ArtCarousel>
         </div>
+        </motion.div>
       </section>
 
       <section id="commission" className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           variants={fadeUp}
           transition={{ duration: 0.5 }}
           className="relative overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-primary-100 via-white to-surface-50 p-8 shadow-xl shadow-primary-100 md:p-12"
@@ -301,7 +254,7 @@ export default function ArtPortfolioLandingPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             transition={{ duration: 0.5 }}
             className="mx-auto"
           >
@@ -318,7 +271,7 @@ export default function ArtPortfolioLandingPage() {
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: false }}
             variants={fadeUp}
             transition={{ duration: 0.5 }}
           >
