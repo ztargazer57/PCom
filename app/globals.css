@@ -4,6 +4,33 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.float {
+  animation: float 5s ease-in-out infinite;
+}
+.zoom {
+    animation: zoom 5s ease-in-out infinite;
+}
+
+@keyframes zoom {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.03);
+    }
+}
+@keyframes float {
+  0% {
+    transform: translateY(3px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(3px);
+  }
+}
+
 @theme inline {
   --color-surface-50: var(--surface-50);
   --color-surface-100: var(--surface-100);
