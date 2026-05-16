@@ -41,7 +41,7 @@ export async function POST(req: Request) {
     const path = `/v${version}/pcom/${publicId}.${format}`;
 
      // Adding the Cloudinary PID to Database
-        const { d, error } = await supabase.from("artworks").insert({
+        const { error } = await supabase.from("artworks").insert({
             title: "Untitled",
             category: "Uncategorized",
         path: path,
