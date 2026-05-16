@@ -87,7 +87,7 @@ export default function ArtPortfolioLandingPage() {
     );
   }
   return (
-    <main className="min-h-screen bg-surface-50 text-slate-700">
+    <main className="min-h-screen bg-surface-50 text-slate-700 overflow-hidden">
       <nav className="sticky top-0 z-50 border-b border-primary-100/80 bg-surface-50/80 backdrop-blur-xl">
         <div className="mx-auto flex items-center justify-between px-5 py-4 md:px-8">
           <a
@@ -237,7 +237,7 @@ export default function ArtPortfolioLandingPage() {
             viewport={{ once: false }}
             transition={{duration: 1}}
         >
-            <div className="w-full min-h-120 overflow-hidden">
+            <div className="w-full min-h-120">
             <hr className="mt-8 max-w-[80%] mx-auto border-primary-700/20 "/>
            <ArtCarousel></ArtCarousel>
         </div>
@@ -245,7 +245,6 @@ export default function ArtPortfolioLandingPage() {
       </section>
 
       <section id="commission" className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
-        <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary-200/60 blur-3xl" />
         <motion.div
           initial="hidden"
           whileInView="visible"
