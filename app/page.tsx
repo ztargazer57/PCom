@@ -237,7 +237,7 @@ export default function ArtPortfolioLandingPage() {
             viewport={{ once: false }}
             transition={{duration: 1}}
         >
-            <div className="w-full min-h-120">
+            <div className="w-full min-h-120 overflow-hidden">
             <hr className="mt-8 max-w-[80%] mx-auto border-primary-700/20 "/>
            <ArtCarousel></ArtCarousel>
         </div>
