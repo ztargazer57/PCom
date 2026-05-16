@@ -294,7 +294,7 @@ export default function ArtPortfolioLandingPage() {
       </section>
 
       <section id="about" className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
-        <div className="grid items-center rounded-[2rem] p-6 md:grid-cols-[280px_1fr] md:p-10">
+        <div className="grid items-center rounded-[2rem] p-6 md:grid-cols-[280px_1fr] lg:p-10">
           <motion.div
             initial={ "hidden" }
             whileInView={ "visible" }
@@ -303,7 +303,7 @@ export default function ArtPortfolioLandingPage() {
             transition={{ duration: 1 }}
             className="mx-auto"
           >
-            <div className="bg-primary-200 p-3 rounded-full shadow-[6px_8px_15px] shadow-primary-900/40">
+            <div className="bg-primary-200 p-3 rounded-full shadow-[6px_8px_15px] shadow-primary-900/40 mb-12 md:mb-0">
               <img
                 src="https://i.pinimg.com/736x/4f/3b/95/4f3b95c3a2d989562165a98bb5197d73.jpg"
                 alt="Artist avatar"
@@ -317,17 +317,17 @@ export default function ArtPortfolioLandingPage() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false }}
-            variants={fadeUp}
-            transition={{ duration: 0.5 }}
+            variants={fadeLeft}
+            transition={{ duration: 1 }}
           >
             <p className="text-sm font-bold font-heading uppercase tracking-[0.1em] text-primary-400 [text-shadow:0_0_4px_rgba(3,169,244,.3)]">
               {pageContent.aboutTitle}
             </p>
-            <hr className="ml-4 mt-1 w-[30%]  border-primary-700/20"/>
-            <h2 className="ml-8 mt-1 text-3xl font-bold tracking-tight text-slate-800">
-              Hi, I’m <span className="text-primary-400">Lumi</span>.
+            <hr className="ml-0 mt-1 w-[50%]  border-primary-700/20 lg:w-[30%] md:ml-4"/>
+            <h2 className="ml-0 mt-1 text-3xl font-bold tracking-tight text-slate-800 md:ml-8">
+              Hi, I’m <span className="text-primary-400">Frieren</span>.
             </h2>
-            <p className="ml-12 font-body text-lg text-primary-900/70">
+            <p className="ml-0 font-body text-lg text-primary-900/70 md:ml-12">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{pageContent.aboutText}
             </p>
 
