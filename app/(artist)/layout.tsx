@@ -52,11 +52,7 @@ export default function DasboardLayout({
               <Link
                 key={item.label}
                 href={item.url}
-                className={`flex min-w-max items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition ${
-                  item.active
-                    ? "bg-sky-100 text-sky-700 shadow-sm"
-                    : "text-slate-500 hover:bg-sky-50 hover:text-sky-700"
-                }`}
+                className={`flex min-w-max items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium transition`}
               >
                 <Icon className="h-5 w-5" />
                 {item.label}
