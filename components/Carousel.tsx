@@ -18,7 +18,7 @@ const artworks = [
     title: "Moonlit Guardian",
     category: "Character Illustration",
     image:
-      "https://i1-e.pinimg.com/1200x/fb/f3/ff/fbf3ff5aa547c621b1b7c948f040d40c.jpg",
+      "https://res.cloudinary.com/duojdqtiz/image/upload/v1780472673/Untitled49_1_tqahpm.jpg",
   },
   {
     title: "Pastel Daydream",
