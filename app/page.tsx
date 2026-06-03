@@ -199,7 +199,7 @@ export default function ArtPortfolioLandingPage() {
                 className="absolute bottom-0 right-0 h-[80%] w-[80%] rounded-[2rem] bg-primary-900 md:rounded-[3rem]" />
               <div className="relative z-10 mx-auto h-full w-[90%] rounded-[2rem] float overflow-hidden shadow-2xl shadow-slate-900 ">
                     <img
-                src="https://i.pinimg.com/736x/ee/d6/fd/eed6fd6a3d1f461535030d4eb5717614.jpg"
+                src="https://res.cloudinary.com/duojdqtiz/image/upload/v1780472673/Untitled49_1_tqahpm.jpg"
                 alt=""
                 className="w-full h-full object-cover object-center zoom transition duration-700 scale-103 hover:scale-105 hover:brightness-110"
               />
