@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ArtCarousel } from "@/components/Carousel";
 const artworks = [
   {
     title: "Moonlit Guardian",
@@ -54,13 +55,33 @@ const artworks = [
   },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+const fade = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1 },
+};
+
+const fadeDown = {
+  hidden: { opacity: 0, y: -40 },
   visible: { opacity: 1, y: 0 },
 };
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const fadeRight = {
+  hidden: { opacity: 0, x: -40 },
+  visible: { opacity: 1, x: 0 },
+};
+
+const fadeLeft = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { opacity: 1, x: 0 },
+};
+
 export default function SiteContent() {
-    const [isSaving, setIsSaving] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [pageContent, setPageContent] = useState({
     heroTitle: "",
     heroSubtitle: "",
@@ -158,284 +179,298 @@ export default function SiteContent() {
 
   const [mounted, setMounted] = useState(false);
 
-useEffect(() => {
-  setMounted(true);
-}, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
-  <div className="flex h-screen flex-col bg-[#F7FBFF]">
-
-    {/* Scrollable content */}
-    <div className="flex-1 overflow-y-auto">
-      <main className="min-h-screen bg-[#F7FBFF] text-slate-700">
-        <nav className="sticky top-0 z-50 border-b border-sky-100/80 bg-[#F7FBFF]/80 backdrop-blur-xl">
-          <div className="mx-auto flex items-center justify-between px-5 py-4 md:px-8">
-            <div className="flex items-center gap-2 text-lg font-semibold tracking-tight text-slate-800">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-sky-200/80 shadow-sm">
-                <Sparkles className="h-5 w-5 text-sky-600" />
-              </span>
-              <input type="text" defaultValue="Lumi Art Studio"></input>
-            </div>
-
-            <div className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
-              <a href="#works" className="transition hover:text-sky-600">
-                Gallery
-              </a>
-              <a href="#about" className="transition hover:text-sky-600">
-                About
-              </a>
-              <a href="#commission" className="transition hover:text-sky-600">
-                Commission
-              </a>
-            </div>
-
-            <Button className="rounded-2xl bg-sky-400 px-5 text-white shadow-lg shadow-sky-200 transition hover:bg-sky-500 hover:shadow-sky-300">
-              Commission Me
-            </Button>
-          </div>
-        </nav>
-
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#DDF1FF] via-[#F7FBFF] to-white">
-          <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-sky-200/50 blur-3xl" />
-          <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-blue-100/70 blur-3xl" />
-          <hr></hr>
-
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-sky-200 bg-white/70 px-4 py-2 text-sm font-medium text-sky-700 shadow-sm backdrop-blur">
-                <Heart className="h-4 w-4 fill-sky-200 text-sky-500" />
-                Custom character art with a soft magical touch
+    <div className="flex h-screen flex-col bg-[#F7FBFF]">
+      {/* Scrollable content */}
+      <div className="flex-1 overflow-y-auto">
+        <main className="min-h-screen bg-surface-50 text-slate-700 overflow-hidden">
+          <nav className="sticky top-0 z-50 border-b border-primary-100/80 bg-surface-50/80 backdrop-blur-xl">
+            <div className="mx-auto flex items-center justify-between px-5 py-4 md:px-8">
+              <div className="flex items-center gap-2 text-lg font-semibold tracking-tight text-slate-800">
+                <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary-200/80 shadow-sm">
+                  <Sparkles className="h-5 w-5 text-primary-600" />
+                </span>
+                <input type="text" defaultValue="Lumi Art Studio"></input>
               </div>
 
-              <textarea
-                className="max-w-xl max-h-fit text-4xl font-bold tracking-tight text-slate-800 sm:text-5xl md:text-6xl overflow-hidden"
-                name="heroTitle"
-                value={pageContent.heroTitle}
-                onChange={handleInput}
-              ></textarea>
-
-              <textarea
-                className="mt-6 w-full text-base leading-8 text-slate-600 md:text-lg overflow-hidden"
-                name="heroSubtitle"
-                value={pageContent.heroSubtitle}
-                onChange={handleInput}
-              ></textarea>
-
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button className="rounded-2xl bg-sky-400 px-7 py-6 text-base text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300">
-                  Commission Me
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="rounded-2xl border-sky-200 bg-white/80 px-7 py-6 text-base text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-50 hover:text-sky-700"
+              <div className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
+                <a href="#works" className="transition hover:text-primary-600">
+                  Gallery
+                </a>
+                <a href="#about" className="transition hover:text-primary-600">
+                  About
+                </a>
+                <a
+                  href="#commission"
+                  className="transition hover:text-primary-600"
                 >
-                  View Gallery
-                </Button>
+                  Commission
+                </a>
               </div>
-            </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="relative mx-auto w-full max-w-md"
-            >
-              <div className="absolute inset-0 rounded-[2rem] bg-sky-200 blur-3xl opacity-60" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-white p-3 shadow-2xl shadow-sky-100">
-                <img
-                  src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1400&auto=format&fit=crop"
-                  alt="Featured character artwork"
-                  loading="eager"
-                  className="h-[460px] w-full rounded-[1.5rem] object-cover"
-                />
-                <div className="absolute bottom-6 left-6 right-6 rounded-3xl bg-white/80 p-4 shadow-lg backdrop-blur-xl">
-                  <p className="text-sm font-semibold text-slate-800">
-                    Featured Artwork
-                  </p>
-                  <p className="text-sm text-slate-500">
-                    Pastel character portrait with dreamy lighting
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-
-        <section id="works" className="mx-auto max-w-7xl px-5 py-20 md:px-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.5 }}
-            className="mx-auto max-w-2xl text-center"
-          >
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">
-              Featured Works
-            </p>
-            <textarea
-              className="mt-3 text-3xl font-bold text-center w-full h-10 tracking-tight text-slate-800 md:text-4xl overflow-hidden"
-              name="featuredTitle"
-              value={pageContent.featuredTitle}
-              onChange={handleInput}
-            ></textarea>
-            <p className="mt-4 text-slate-600">
-              Browse selected personal pieces, commissions, and gentle character
-              studies.
-            </p>
-          </motion.div>
-
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {artworks.map((art, index) => (
-              <motion.div
-                key={art.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.05 }}
-              >
-                <Card className="group overflow-hidden rounded-[1.75rem] border-sky-100 bg-white shadow-lg shadow-sky-100/70 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-sky-100">
-                  <CardContent className="p-3">
-                    <div className="overflow-hidden rounded-[1.35rem]">
-                      <img
-                        src={art.image}
-                        alt={art.title}
-                        loading="lazy"
-                        className="h-72 w-full object-cover transition duration-500 group-hover:scale-105 group-hover:brightness-105"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-slate-800">
-                        {art.title}
-                      </h3>
-                      <p className="mt-1 text-sm text-slate-500">
-                        {art.category}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        <section
-          id="commission"
-          className="mx-auto max-w-7xl px-5 pb-20 md:px-8"
-        >
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            transition={{ duration: 0.5 }}
-            className="relative overflow-hidden rounded-[2rem] border border-sky-100 bg-gradient-to-br from-sky-100 via-white to-blue-50 p-8 shadow-xl shadow-sky-100 md:p-12"
-          >
-            <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-sky-200/60 blur-3xl" />
-            <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-500">
-                  Commissions
-                </p>
-                <textarea
-                  className="mt-3 text-3xl font-bold tracking-tight text-slate-800 overflow-hidden md:text-4xl"
-                  name="ctaTitle"
-                  value={pageContent.ctaTitle}
-                  onChange={handleInput}
-                ></textarea>
-                <textarea
-                  className="mt-4 w-full leading-7 text-slate-600 overflow-hidden"
-                  name="ctaText"
-                  value={pageContent.ctaText}
-                  onChange={handleInput}
-                ></textarea>
-              </div>
-              <input
-                type="text"
-                className="button max-h-10! rounded-2xl bg-sky-400 px-7 py-3 text-base text-xl text-white shadow-xl shadow-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500 hover:shadow-sky-300"
-                name="ctaBText"
-                value={pageContent.ctaBText}
-                onChange={handleInput}
-              ></input>
+              <Button className="rounded-2xl bg-primary-400 px-5 text-white shadow-lg shadow-primary-200 transition hover:bg-primary-500 hover:shadow-primary-300">
+                Commission Me
+              </Button>
             </div>
-          </motion.div>
-        </section>
+          </nav>
 
-        <section id="about" className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
-          <div className="grid items-center gap-10 rounded-[2rem] bg-white p-6 shadow-lg shadow-sky-100/70 md:grid-cols-[280px_1fr] md:p-10">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="mx-auto"
-            >
-              <div className="rounded-full border-8 border-sky-100 bg-white p-2 shadow-xl shadow-sky-100">
-                <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=800&auto=format&fit=crop"
-                  alt="Artist avatar"
-                  loading="lazy"
-                  className="h-52 w-52 rounded-full object-cover"
-                />
-              </div>
-            </motion.div>
+          <section className="relative overflow-hidden bg-gradient-to-br from-surface-200 via-surface-50 to-white">
+            <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-primary-200/50 blur-3xl" />
+            <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-primary-100/70 blur-3xl" />
+            <hr className="mt-20 mb-8 max-w-[90%] mx-auto border-primary-700/20 hidden md:block lg:block" />
 
+            <div className="relative mx-auto grid max-w-7xl items-center px-5 py-8 md:grid-cols-2 md:px-8 md:py-12">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false }}
+                variants={fadeRight}
+                transition={{ duration: 1 }}
+              >
+                <div className="relative w-fit h-fit mx-auto">
+                  <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary-200 bg-white/70 px-4 py-2 text-sm text-primary-700 shadow-sm backdrop-blur">
+                    <Heart className="h-4 w-4 fill-primary-200 text-primary-500" />
+                    <p className="font-styled text-lg mt-1 sm:text-xl lg:text-2xl">
+                      Character art with a soft magical touch
+                    </p>
+                  </div>
+
+                  <textarea
+                    className="max-w-[15ch] text-4xl mx-auto font-heading font-bold tracking-wide leading-[0.95] text-slate-800 sm:text-5xl md:text-5xl lg:text-6xl [text-shadow:4px_4px_4px_rgba(1,1,1,0.25)] overflow-hidden"
+                    name="heroTitle"
+                    value={pageContent.heroTitle}
+                    onChange={handleInput}
+                  ></textarea>
+
+                  <textarea
+                    className="mt-6 w-full font-body text-base leading-8 text-slate-600 md:text-lg overflow-hidden"
+                    name="heroSubtitle"
+                    value={pageContent.heroSubtitle}
+                    onChange={handleInput}
+                  ></textarea>
+
+                  <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                    <Button className="rounded-2xl bg-primary-400 px-7 py-6 text-base text-white shadow-xl shadow-primary-200 transition hover:-translate-y-0.5 hover:bg-primary-500 hover:shadow-primary-300">
+                      Commission Me
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="rounded-2xl border-primary-200 bg-white/80 px-7 py-6 text-base text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-700"
+                    >
+                      View Gallery
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                variants={fadeLeft}
+                viewport={{ once: false }}
+                transition={{ duration: 1 }}
+                className="relative mx-auto w-full max-w-lg"
+              >
+                <div className="absolute inset-0 rounded-[2rem] bg-primary-200 blur-3xl opacity-60" />
+                <div className="relative mx-auto mt-20 w-full max-w-[520px] aspect-4/3 py-4 md:mt-0 lg:mt-0 transition duration-500 hover:scale-105">
+                  <motion.div
+                    animate={{
+                      x: [0, -5, 0],
+                      y: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+
+                      // Makes each card start at different times
+                      delay: 0.5,
+                    }}
+                    className="absolute top-0 left-0 h-[90%] w-[90%] rounded-[2rem] bg-primary-300 md:rounded-[3rem]"
+                  />
+                  <motion.div
+                    animate={{
+                      y: [0, -5, 0],
+                      x: [0, -5, 0],
+                    }}
+                    transition={{
+                      duration: 5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+
+                      // Makes each card start at different times
+                      delay: 0.5,
+                    }}
+                    className="absolute bottom-0 right-0 h-[80%] w-[80%] rounded-[2rem] bg-primary-900 md:rounded-[3rem]"
+                  />
+                  <div className="relative z-10 mx-auto h-full w-[90%] rounded-[2rem] float overflow-hidden shadow-2xl shadow-slate-900 ">
+                    <img
+                      src="https://i.pinimg.com/736x/ee/d6/fd/eed6fd6a3d1f461535030d4eb5717614.jpg"
+                      alt=""
+                      className="w-full h-full object-cover object-center zoom transition duration-700 scale-103 hover:scale-105 hover:brightness-110"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+            <hr className="mt-8 mb-24 max-w-[50%] mx-auto border-primary-700/20 hidden md:block lg:block"></hr>
+          </section>
+
+          <section id="works" className="mx-auto max-w-7xl px-5 py-20 md:px-8">
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               transition={{ duration: 0.5 }}
+              className="mx-auto max-w-2xl text-center"
             >
-              <textarea className="w-full text-sm font-semibold uppercase tracking-[0.2em] text-sky-500"
-                name="aboutTitle"
-                value={pageContent.aboutTitle}
+              <p className="text-sm font-bold font-heading uppercase tracking-[0.1em] text-primary-400 [text-shadow:0_0_4px_rgba(3,169,244,.3)]">
+                Featured Works
+              </p>
+              <textarea
+                className="mt-1 text-2xl font-bold font-heading text-center w-full h-10 tracking-tight text-primary-900 md:text-4xl overflow-hidden"
+                name="featuredTitle"
+                value={pageContent.featuredTitle}
                 onChange={handleInput}
-              >
-              </textarea>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-800">
-                Hi, I’m Lumi.
-              </h2>
-              <textarea className="w-full"
-                name="aboutText"
-                value={pageContent.aboutText}
-                onChange={handleInput}
-              >
-              </textarea>
-
-              <div className="mt-7 flex gap-3">
-                {[Send, MessageCircle, Mail].map((Icon, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="flex h-11 w-11 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-sky-600 shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-100 hover:shadow-lg hover:shadow-sky-100"
-                  >
-                    <Icon className="h-5 w-5" />
-                  </a>
-                ))}
+              ></textarea>
+              <p className="text-lg font-body text-primary-900/70">
+                Browse selected personal pieces, commissions, and gentle
+                character studies.
+              </p>
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              variants={fade}
+              viewport={{ once: false }}
+              transition={{ duration: 1 }}
+            >
+              <div className="w-full min-h-120">
+                <hr className="mt-8 max-w-[80%] mx-auto border-primary-700/20 " />
+                <ArtCarousel></ArtCarousel>
               </div>
             </motion.div>
-          </div>
-        </section>
+          </section>
 
-        <footer className="border-t border-sky-100 bg-white/70 px-5 py-8 text-center text-sm text-slate-500">
-          © 2026 Lumi Art Studio. Soft character art and commissions.
-        </footer>
-      </main>
-    </div>
+          <section
+            id="commission"
+            className="mx-auto max-w-7xl px-5 pb-20 md:px-8"
+          >
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false }}
+              variants={fadeRight}
+              transition={{ duration: 1 }}
+              className="-mt-80 overflow-hidden rounded-[2rem] border border-primary-100 bg-gradient-to-br from-primary-100 via-white to-surface-50 p-8 shadow-xl shadow-primary-100 md:-mt-24 lg:mt-0 md:p-12"
+            >
+              <div className="h-fit py-4 px-0 flex flex-col items-start justify-between gap-8 md:flex-row md:items-center md:p-0">
+                <div className="flex-1">
+                  <p className="text-sm font-bold font-heading uppercase tracking-[0.1em] text-primary-400 [text-shadow:0_0_4px_rgba(3,169,244,.3)]">
+                    Commissions
+                  </p>
+                  <textarea
+                    className="text-2xl mt-1 h-10 max-w-3xl w-full font-bold font-heading tracking-tight text-primary-900  md:text-3xl"
+                    name="ctaTitle"
+                    value={pageContent.ctaTitle}
+                    onChange={handleInput}
+                  ></textarea>
+                  <textarea
+                    className="w-full max-w-3xl font-body leading-7 text-primary-900/70 overflow-hidden"
+                    name="ctaText"
+                    value={pageContent.ctaText}
+                    onChange={handleInput}
+                  ></textarea>
+                </div>
+                <input
+                  type="text"
+                  className="button max-h-10! rounded-2xl font-body bg-primary-400 px-4 py-3 text-xs text-white shadow-xl shadow-primary-200 uppercase transition md:px-7 md:py-6 md:text-base md:ml-auto hover:-translate-y-0.5 hover:bg-primary-500 hover:shadow-primary-300"
+                  name="ctaBText"
+                  value={pageContent.ctaBText}
+                  onChange={handleInput}
+                ></input>
+              </div>
+            </motion.div>
+          </section>
 
-    {mounted &&
-  createPortal(
-    <Button
-      type="button"
-      onClick={handleSave}
-      className="
+          <section id="about" className="mx-auto max-w-7xl px-5 pb-20 md:px-8">
+            <div className="grid items-center rounded-[2rem] p-6 md:grid-cols-[280px_1fr] lg:p-10">
+              <motion.div
+                initial={"hidden"}
+                whileInView={"visible"}
+                viewport={{ once: false }}
+                variants={fadeRight}
+                transition={{ duration: 1 }}
+                className="mx-auto"
+              >
+                <div className="bg-primary-200 p-3 rounded-full shadow-[6px_8px_15px] shadow-primary-900/40 mb-12 md:mb-0">
+                  <img
+                    src="https://i.pinimg.com/736x/4f/3b/95/4f3b95c3a2d989562165a98bb5197d73.jpg"
+                    alt="Artist avatar"
+                    loading="lazy"
+                    className="h-52 w-52 rounded-full object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: false }}
+                variants={fadeLeft}
+                transition={{ duration: 1 }}
+              >
+                <textarea
+                  className="w-full text-sm font-bold font-heading uppercase tracking-[0.1em] text-primary-400 [text-shadow:0_0_4px_rgba(3,169,244,.3)]"
+                  name="aboutTitle"
+                  value={pageContent.aboutTitle}
+                  onChange={handleInput}
+                ></textarea>
+                <hr className="ml-0 mt-1 w-[50%]  border-primary-700/20 lg:w-[30%] md:ml-4"/>
+                <h2 className="ml-0 mt-1 text-3xl font-bold tracking-tight text-slate-800 md:ml-8">
+              Hi, I’m <span className="text-primary-400">Frieren</span>.
+            </h2>
+                <textarea
+                  className="w-full ml-0 font-body text-lg text-primary-900/70 md:ml-12"
+                  name="aboutText"
+                  value={pageContent.aboutText}
+                  onChange={handleInput}
+                ></textarea>
+
+                <div className="mt-7 flex gap-3">
+                  {[Send, MessageCircle, Mail].map((Icon, index) => (
+                    <a
+                      key={index}
+                      href="#"
+                      className="flex h-11 w-11 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-sky-600 shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-100 hover:shadow-lg hover:shadow-sky-100"
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+        <hr className="mt-12 w-[100%]  border-primary-700/20"/>
+          </section>
+
+          <footer className="border-t border-sky-100 bg-white/70 px-5 py-8 text-center text-sm text-slate-500">
+            © 2026 Lumi Art Studio. Soft character art and commissions.
+          </footer>
+        </main>
+      </div>
+
+      {mounted &&
+        createPortal(
+          <Button
+            type="button"
+            onClick={handleSave}
+            className="
         fixed
         bottom-6
         right-6
@@ -448,12 +483,11 @@ useEffect(() => {
         shadow-xl
         hover:bg-sky-500
       "
-    >
-      {(isSaving)?  "Saving..." : "Save Changes"}
-    </Button>,
-    document.body
-  )}
-
-  </div>
-);
+          >
+            {isSaving ? "Saving..." : "Save Changes"}
+          </Button>,
+          document.body,
+        )}
+    </div>
+  );
 }

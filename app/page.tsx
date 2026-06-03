@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArtCarousel } from "@/components/Carousel";
 import { once } from "events";
+import Link from "next/link";
 
 const fade = {
     hidden: { opacity: 0, scale: .95 },
@@ -151,12 +152,12 @@ export default function ArtPortfolioLandingPage() {
                   Commission Me
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
-                <Button
-                  variant="outline"
-                  className="rounded-2xl border-primary-200 bg-white/80 px-7 py-6 text-base text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-700 md:px-5 md:text-sm"
+                <Link
+                    href={"/gallery"}
+                  className="rounded-2xl bg-white/80 px-7 py-3 border border-primary-400/40 font-semibold tracking-widest font-body text-slate-700 text-2xl uppercase shadow-sm transition hover:-translate-y-0.5 hover:bg-primary-50 hover:text-primary-700 md:px-5 md:text-sm"
                 >
                   View Gallery
-                </Button>
+                </Link>
               </div>
             </div>
           </motion.div>
@@ -194,7 +195,6 @@ export default function ArtPortfolioLandingPage() {
             repeat: Infinity,
             ease: "easeInOut",
 
-            // Makes each card start at different times
             delay: 0.5,}}
                 className="absolute bottom-0 right-0 h-[80%] w-[80%] rounded-[2rem] bg-primary-900 md:rounded-[3rem]" />
               <div className="relative z-10 mx-auto h-full w-[90%] rounded-[2rem] float overflow-hidden shadow-2xl shadow-slate-900 ">
